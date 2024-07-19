@@ -7,6 +7,7 @@ body {
     margin: 0;
     background: black;
     color: #ffffff;
+    overflow: hidden;
 }
 
 .container {
@@ -17,6 +18,18 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     position: relative;
     backdrop-filter: blur(10px);
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 h1 {
@@ -24,6 +37,7 @@ h1 {
     margin-bottom: 20px;
     color: #e0e0e0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    animation: slideIn 1s ease-out;
 }
 
 button {
@@ -34,14 +48,22 @@ button {
     cursor: pointer;
     border: none;
     border-radius: 8px;
-    background:#fd7d7d;
+    background: #fd7d7d;
     color: rgb(0, 0, 0);
-    transition: background 0.3s, transform 0.2s;
+    transition: background 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: slideUp 1s ease-out;
 }
 
-button:hover {
-    transform: scale(1.05);
+@keyframes slideUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 #result, #bullets-status, #rounds-status {
@@ -50,13 +72,11 @@ button:hover {
     font-size: 20px;
     font-weight: bold;
     color: #e0e0e0;
+    animation: slideUp 1s ease-out;
 }
 
 #replay {
     position: relative;
-    left: 60px;
-    top: 10px;
-    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     padding: 15px 25px;
@@ -66,10 +86,32 @@ button:hover {
     color: white;
     border: none;
     border-radius: 8px;
-    transition: background 0.3s, transform 0.2s;
+    transition: background 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: slideIn 1s ease-out;
 }
 
-#replay:hover {
-    background: linear-gradient(145deg, #d4336c, #e94e77);
+#skull {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    display: none;
+    animation: skullAppear 0.5s ease-in-out infinite;
+}
+
+@keyframes skullAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
 }
