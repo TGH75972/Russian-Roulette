@@ -1,44 +1,75 @@
 body {
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #000000;
+    background: black;
+    color: #ffffff;
 }
 
 .container {
     text-align: center;
-    background-color: rgb(250, 135, 135);
-    padding: 50px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 80px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 button {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+    padding: 15px 25px;
     margin: 10px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 8px;
+    background:#fd7d7d;
+    color: rgb(0, 0, 0);
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-    background-color: #ddd;
+    transform: scale(1.05);
 }
 
 #result, #bullets-status, #rounds-status {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin-top: 20px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
+    color: #e0e0e0;
 }
 
-#replay{
-    margin: auto;   
+#replay {
+    position: relative;
+    left: 60px;
+    top: 10px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    font-size: 20px;
+    cursor: pointer;
+    background: linear-gradient(145deg, #e94e77, #d4336c);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#replay:hover {
+    background: linear-gradient(145deg, #d4336c, #e94e77);
 }
