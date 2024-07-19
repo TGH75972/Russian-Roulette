@@ -10,6 +10,16 @@
     <div class="container">
         <h1>Russian Roulette</h1>
         <p id="game-status">Your Turn</p>
+        <div class="weapon-selector">
+            <label for="weapon">Select Weapon:</label>
+            <select id="weapon">
+                <option value="0.17" selected>Pistol</option>
+                <option value="0.2">Shotgun</option>
+                <option value="0.25">Assault Rifle</option>
+                <option value="0.17">.44 Magnum</option>
+            </select>
+            <button id="lock-weapon">Lock Weapon</button>
+        </div>
         <button id="shoot-yourself">Shoot Yourself</button>
         <button id="shoot-other">Shoot Other</button>
         <p id="result"></p>
