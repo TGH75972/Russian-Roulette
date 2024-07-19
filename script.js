@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const roundsStatus = document.getElementById('rounds-status');
     const gameStatus = document.getElementById('game-status');
     const replayButton = document.getElementById('replay');
+    const skullImage = document.getElementById('skull');
 
     let bullets;
     let currentRound;
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shootYourselfButton.disabled = false;
         shootOtherButton.disabled = false;
         replayButton.style.display = "none";
+        skullImage.style.display = "none";
     }
 
     function shuffle(array) {
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function computerTurn() {
         setTimeout(() => {
-            const decision = Math.random() < 0.5; 
+            const decision = Math.random() < 0.5;
             if (maybeMiss()) {
                 resultText.textContent = `Computer's turn: The robot missed the shot.`;
                 updateStatus();
@@ -93,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         shootYourselfButton.disabled = true;
                         shootOtherButton.disabled = true;
                         replayButton.style.display = "block";
+                        skullImage.style.display = "block";
                     } else {
                         resultText.textContent = `Computer's turn: Click! The robot missed you.`;
                         updateStatus();
@@ -112,8 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     shootYourselfButton.addEventListener('click', () => {
         if (playerTurn) {
-            if (maybeMiss()) {
-                resultText.textContent = `Your turn: You missed the shot.`;
+            const result = getResult();
+            if (result) {
+                resultText.textContent = `You shot yourself.`;
+                gameStatus.textContent = "Game Over. You lost.";
+                shootYourselfButton.disabled = true;
+                shootOtherButton.disabled = true;
+                replayButton.style.display = "block";
+                skullImage.style.display = "block";
+            } else {
+                resultText.textContent = `Click! You survived.`;
                 updateStatus();
                 if (bullets.length === 0) {
                     resultText.textContent = "The game is over, all bullets have been used.";
@@ -123,27 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     playerTurn = false;
                     gameStatus.textContent = "Computer's Turn";
                     computerTurn();
-                }
-            } else {
-                const result = getResult();
-                if (result) {
-                    resultText.textContent = `Your turn: You shot yourself.`;
-                    gameStatus.textContent = "Game Over. You lost.";
-                    shootYourselfButton.disabled = true;
-                    shootOtherButton.disabled = true;
-                    replayButton.style.display = "block";
-                } else {
-                    resultText.textContent = `Your turn: Click! You survived.`;
-                    updateStatus();
-                    if (bullets.length === 0) {
-                        resultText.textContent = "The game is over, all bullets have been used.";
-                        gameStatus.textContent = "Reloading bullets...";
-                        initGame();
-                    } else {
-                        playerTurn = false;
-                        gameStatus.textContent = "Computer's Turn";
-                        computerTurn();
-                    }
                 }
             }
         }
@@ -151,8 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     shootOtherButton.addEventListener('click', () => {
         if (playerTurn) {
-            if (maybeMiss()) {
-                resultText.textContent = `Your turn: You missed the shot at the computer.`;
+            const result = getResult();
+            if (result) {
+                resultText.textContent = `You shot the other person.`;
+                gameStatus.textContent = "You win!";
+                shootYourselfButton.disabled = true;
+                shootOtherButton.disabled = true;
+                replayButton.style.display = "block";
+            } else {
+                resultText.textContent = `Click! The other person survived.`;
                 updateStatus();
                 if (bullets.length === 0) {
                     resultText.textContent = "The game is over, all bullets have been used.";
@@ -162,27 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     playerTurn = false;
                     gameStatus.textContent = "Computer's Turn";
                     computerTurn();
-                }
-            } else {
-                const result = getResult();
-                if (result) {
-                    resultText.textContent = `Your turn: You shot the living CPU out of him!`;
-                    gameStatus.textContent = "Game Over. You win!";
-                    shootYourselfButton.disabled = true;
-                    shootOtherButton.disabled = true;
-                    replayButton.style.display = "block";
-                } else {
-                    resultText.textContent = `Your turn: Click! The computer survived.`;
-                    updateStatus();
-                    if (bullets.length === 0) {
-                        resultText.textContent = "The game is over, all bullets have been used.";
-                        gameStatus.textContent = "Reloading bullets...";
-                        initGame();
-                    } else {
-                        playerTurn = false;
-                        gameStatus.textContent = "Computer's Turn";
-                        computerTurn();
-                    }
                 }
             }
         }
