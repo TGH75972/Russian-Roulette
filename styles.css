@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,6 +11,7 @@ body {
 }
 
 .container {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     background: rgba(255, 255, 255, 0.1);
     padding: 80px;
@@ -19,6 +20,29 @@ body {
     position: relative;
     backdrop-filter: blur(10px);
     animation: slideIn 1s ease-out;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: #fd7d7d;
+    border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: #d4336c;
 }
 
 @keyframes slideIn {
@@ -41,7 +65,7 @@ h1 {
 }
 
 button {
-    font-family: 'Arial', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 15px 25px;
     margin: 10px;
     font-size: 18px;
@@ -93,9 +117,9 @@ button {
 
 #skull {
     position: absolute;
-    top: 10%;
+    bottom: 75%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     width: 150px;
     display: none;
     animation: skullAppear 0.5s ease-in-out infinite;
@@ -104,14 +128,61 @@ button {
 @keyframes skullAppear {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
+        transform: translate(-50%, 0) scale(0.5);
     }
     50% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translate(-50%, 0) scale(1.2);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
+        transform: translate(-50%, 0) scale(0.5);
     }
+}
+
+.weapon-selector {
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.weapon-selector label {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.weapon-selector select {
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #fd7d7d;
+    background: #222;
+    color: #e0e0e0;
+    transition: border 0.3s;
+}
+
+.weapon-selector select:focus {
+    border-color: #d4336c;
+    outline: none;
+}
+
+#lock-weapon {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(145deg, #e94e77, #d4336c);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    scrollbar-width: thin;
+    scrollbar-color: #fd7d7d rgba(255, 255, 255, 0.1);
+}
+
+.container::-webkit-scrollbar-corner {
+    background: rgba(255, 255, 255, 0.1);
 }
