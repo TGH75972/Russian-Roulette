@@ -7,10 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameStatus = document.getElementById('game-status');
     const replayButton = document.getElementById('replay');
     const skullImage = document.getElementById('skull');
+    const weaponSelect = document.getElementById('weapon');
+    const lockWeaponButton = document.getElementById('lock-weapon');
 
     let bullets;
     let currentRound;
     let playerTurn;
+    let missingChance = 0.2; 
+    let robotBulletsShot = 0; 
 
     function initGame() {
         const liveBulletsCount = Math.max(1, Math.floor(Math.random() * 5) + 1);
@@ -19,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shuffle(bullets);
         currentRound = 1;
         playerTurn = true;
+        robotBulletsShot = 0; 
         updateStatus();
         gameStatus.textContent = "Your Turn";
         resultText.textContent = "";
@@ -38,23 +43,28 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatus() {
         const liveBullets = bullets.filter(bullet => bullet === 1).length;
         const blankBullets = bullets.length - liveBullets;
-        bulletsStatus.textContent = `Live Bullets: ${liveBullets}, Blank Bullets: ${blankBullets}`;
+        bulletsStatus.textContent = `Live Bullets: ${liveBullets}, Blank Bullets: ${blankBullets}, Robot Bullets Shot: ${robotBulletsShot}`;
         roundsStatus.textContent = `Round: ${currentRound}`;
     }
 
     function getResult() {
+        if (bullets.length === 0) {
+            return false; 
+        }
         const bullet = bullets.pop();
         currentRound++;
+        updateStatus(); 
         return bullet === 1;
     }
 
     function maybeMiss() {
-        return Math.random() < 0.2;
+        return Math.random() < missingChance;
     }
 
     function computerTurn() {
         setTimeout(() => {
             const decision = Math.random() < 0.5;
+            robotBulletsShot++; 
             if (maybeMiss()) {
                 resultText.textContent = `Computer's turn: The robot missed the shot.`;
                 updateStatus();
@@ -113,6 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
+    function updateMissingChance() {
+        missingChance = parseFloat(weaponSelect.value);
+    }
+
     shootYourselfButton.addEventListener('click', () => {
         if (playerTurn) {
             const result = getResult();
@@ -162,6 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+    });
+
+    lockWeaponButton.addEventListener('click', () => {
+        updateMissingChance();
     });
 
     replayButton.addEventListener('click', () => {
