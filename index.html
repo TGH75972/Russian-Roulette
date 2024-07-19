@@ -9,17 +9,17 @@
 <body>
     <div class="container">
         <h1>Russian Roulette</h1>
-        <p id="game-status">Your Turn</p>
         <div class="weapon-selector">
             <label for="weapon">Select Weapon:</label>
             <select id="weapon">
-                <option value="0.17" selected>Pistol</option>
-                <option value="0.2">Shotgun</option>
-                <option value="0.25">Assault Rifle</option>
-                <option value="0.17">.44 Magnum</option>
+                <option value="pistol">Pistol</option>
+                <option value="shotgun">Shotgun</option>
+                <option value="assault-rifle">Assault Rifle</option>
+                <option value="magnum">.44 Magnum</option>
             </select>
             <button id="lock-weapon">Lock Weapon</button>
         </div>
+        <p id="game-status">Your Turn</p>
         <button id="shoot-yourself">Shoot Yourself</button>
         <button id="shoot-other">Shoot Other</button>
         <p id="result"></p>
@@ -27,6 +27,15 @@
         <p id="rounds-status"></p>
         <button id="replay" style="display: none;">⟳</button>
         <img id="skull" src="skull.png" alt="Skull" style="display: none;">
+
+        <audio id="pistol-sound" src="pistol.mp3"></audio>
+        <audio id="pistol-empty" src="pistol-empty.mp3"></audio>
+        <audio id="shotgun-sound" src="shotgun.mp3"></audio>
+        <audio id="shotgun-empty" src="shotgun-empty.mp3"></audio>
+        <audio id="assault-rifle-sound" src="assault-rifle.mp3"></audio>
+        <audio id="assault-rifle-empty" src="assault-empty.mp3"></audio>
+        <audio id="magnum-sound" src="magnum.mp3"></audio>
+        <audio id="magnum-empty" src="magnum-empty.mp3"></audio>
     </div>
     <script src="script.js"></script>
 </body>
