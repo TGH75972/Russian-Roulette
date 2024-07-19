@@ -13,8 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let bullets;
     let currentRound;
     let playerTurn;
-    let missingChance = 0.2; 
-    let robotBulletsShot = 0; 
+    let selectedWeapon = 'pistol';
+    let weaponChances = {
+        'pistol': 1/5,
+        'shotgun': 0,
+        'assault-rifle': 2/6,
+        'magnum': 1/6
+    };
 
     function initGame() {
         const liveBulletsCount = Math.max(1, Math.floor(Math.random() * 5) + 1);
@@ -23,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         shuffle(bullets);
         currentRound = 1;
         playerTurn = true;
-        robotBulletsShot = 0; 
         updateStatus();
         gameStatus.textContent = "Your Turn";
         resultText.textContent = "";
@@ -43,28 +47,30 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatus() {
         const liveBullets = bullets.filter(bullet => bullet === 1).length;
         const blankBullets = bullets.length - liveBullets;
-        bulletsStatus.textContent = `Live Bullets: ${liveBullets}, Blank Bullets: ${blankBullets}, Robot Bullets Shot: ${robotBulletsShot}`;
+        bulletsStatus.textContent = `Live Bullets: ${liveBullets}, Blank Bullets: ${blankBullets}`;
         roundsStatus.textContent = `Round: ${currentRound}`;
     }
 
     function getResult() {
-        if (bullets.length === 0) {
-            return false; 
-        }
         const bullet = bullets.pop();
         currentRound++;
-        updateStatus(); 
         return bullet === 1;
     }
 
+    function playSound(isLive) {
+        const soundType = isLive ? 'sound' : 'empty';
+        const soundId = `${selectedWeapon}-${soundType}`;
+        const soundElement = document.getElementById(soundId);
+        soundElement.play();
+    }
+
     function maybeMiss() {
-        return Math.random() < missingChance;
+        return Math.random() < weaponChances[selectedWeapon];
     }
 
     function computerTurn() {
         setTimeout(() => {
             const decision = Math.random() < 0.5;
-            robotBulletsShot++; 
             if (maybeMiss()) {
                 resultText.textContent = `Computer's turn: The robot missed the shot.`;
                 updateStatus();
@@ -79,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 if (decision) {
                     const result = getResult();
+                    playSound(result);
                     if (result) {
                         resultText.textContent = `Computer's turn: The robot shot himself.`;
                         gameStatus.textContent = "Game Over. You win!";
@@ -99,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else {
                     const result = getResult();
+                    playSound(result);
                     if (result) {
                         resultText.textContent = `Computer's turn: The robot shot you.`;
                         gameStatus.textContent = "Game Over. You lost.";
@@ -123,13 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    function updateMissingChance() {
-        missingChance = parseFloat(weaponSelect.value);
-    }
-
     shootYourselfButton.addEventListener('click', () => {
         if (playerTurn) {
             const result = getResult();
+            playSound(result);
             if (result) {
                 resultText.textContent = `You shot yourself.`;
                 gameStatus.textContent = "Game Over. You lost.";
@@ -156,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     shootOtherButton.addEventListener('click', () => {
         if (playerTurn) {
             const result = getResult();
+            playSound(result);
             if (result) {
                 resultText.textContent = `You shot the other person.`;
                 gameStatus.textContent = "You win!";
@@ -178,12 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    lockWeaponButton.addEventListener('click', () => {
-        updateMissingChance();
-    });
+    replayButton.addEventListener('click', initGame);
 
-    replayButton.addEventListener('click', () => {
-        initGame();
+    lockWeaponButton.addEventListener('click', () => {
+        selectedWeapon = weaponSelect.value;
+        alert(`Weapon locked: ${selectedWeapon}`);
     });
 
     initGame();
